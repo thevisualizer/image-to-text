@@ -1,31 +1,30 @@
-const fs = require('fs');
-const request = require('request');
+const qs = require('querystring');
+const http = require('https');
 
 const options = {
-    method: 'POST',
-    url: 'https://ocr-image-to-text4.p.rapidapi.com/image',
-    qs: {
-        etype: 'image'
-    },
-    headers: {
-        'content-type': 'multipart/form-data',
-        'X-RapidAPI-Key': 'YOUR-RAPID-API-KEY',
-        'X-RapidAPI-Host': 'ocr-image-to-text4.p.rapidapi.com',
-        useQueryString: true
-    },
-    formData: {
-        image: {
-            value: fs.createReadStream('example.png'),
-            options: {
-                filename: 'example.png',
-                contentType: 'application/octet-stream'
-            }
-        }
-    }
+	method: 'POST',
+	hostname: 'image-to-text40.p.rapidapi.com',
+	port: null,
+	path: '/ocr-by-image',
+	headers: {
+		'x-rapidapi-key': 'YOUR-RAPID-API-KEY',
+		'x-rapidapi-host': 'image-to-text40.p.rapidapi.com',
+		'Content-Type': 'application/x-www-form-urlencoded'
+	}
 };
 
-request(options, function(error, response, body) {
-    if (error) throw new Error(error);
+const req = http.request(options, function (res) {
+	const chunks = [];
 
-    console.log(body);
+	res.on('data', function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res.on('end', function () {
+		const body = Buffer.concat(chunks);
+		console.log(body.toString());
+	});
 });
+
+req.write(qs.stringify({}));
+req.end();
