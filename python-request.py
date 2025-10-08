@@ -1,16 +1,14 @@
 import requests
 
-url = "https://ocr-image-to-text4.p.rapidapi.com/image"
+url = "https://image-to-text40.p.rapidapi.com/ocr-by-image"
 
-querystring = {"etype":"image"}
-
-payload = "-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"image\"\r\n\r\n\r\n-----011000010111000001101001--\r\n\r\n"
+payload = {}
 headers = {
-	"content-type": "multipart/form-data; boundary=---011000010111000001101001",
-	"X-RapidAPI-Key": "YOUR-RAPID-API-KEY",
-	"X-RapidAPI-Host": "ocr-image-to-text4.p.rapidapi.com"
+	"x-rapidapi-key": "YOUR-RAPID-API-KEY",
+	"x-rapidapi-host": "image-to-text40.p.rapidapi.com",
+	"Content-Type": "application/x-www-form-urlencoded"
 }
 
-response = requests.request("POST", url, data=payload, headers=headers, params=querystring)
+response = requests.post(url, data=payload, headers=headers)
 
-print(response.text)
+print(response.json())
